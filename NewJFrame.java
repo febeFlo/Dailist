@@ -303,49 +303,55 @@ public class NewJFrame extends javax.swing.JFrame {
         ArrayList<String> arrData = new ArrayList<String>();
         ArrayList<Long> arrDue = new ArrayList<Long>();
 
-        SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
+//        SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
         Locale lokal = null;
-        String jam = Jam.getText();
-
+//        String jam = Jam.getText();
         ZoneId zone = ZoneId.systemDefault();
         LocalTime time = LocalTime.now(zone);
 
-        int tahun = cal.get(Calendar.YEAR);
-        int bulan = cal.get(Calendar.MONTH) + 1;
-        int tanggall = cal.get(Calendar.DAY_OF_MONTH);
+        int rows = Jadwal.getRowCount();
+        TableModel model1 = Jadwal.getModel();
 
-        String tahun1 = Integer.toString(tahun);
-        String bulan1 = Integer.toString(bulan);
-        String tanggal1 = Integer.toString(tanggall);
+        for (int i = 0; i < rows; i++) {
+            String tanggalInputt = model1.getValueAt(i, 1).toString();
+            String dueKegiatan = model1.getValueAt(i, 2).toString();
 
-        String tanggal2 = String.valueOf(date.format(Due.getDate()));
+//        int tahun = cal.get(Calendar.YEAR);
+//        int bulan = cal.get(Calendar.MONTH) + 1;
+//        int tanggall = cal.get(Calendar.DAY_OF_MONTH);
+//
+//        String tahun1 = Integer.toString(tahun);
+//        String bulan1 = Integer.toString(bulan);
+//        String tanggal1 = Integer.toString(tanggall);
+//
+//        String tanggal2 = String.valueOf(date.format(Due.getDate()));
+            String pola = "dd-MM-yyyy HH:mm:ss";
+            String waktuSatuStr = (dueKegiatan + " " + "00:00:00");
+            String waktuDuaStr = (tanggalInputt + " " + time);
 
-        String pola = "dd-MM-yyyy HH:mm:ss";
-        String waktuSatuStr = (tanggal2 + " " + jam + ":00");
-        String waktuDuaStr = (tanggal1 + "-" + bulan1 + "-" + tahun1 + " " + time);
+            Date waktuSatu = SisaJam.konversiStringkeDate(waktuSatuStr, pola, lokal);
+            Date WaktuDua = SisaJam.konversiStringkeDate(waktuDuaStr, pola, lokal);
 
-        Date waktuSatu = SisaJam.konversiStringkeDate(waktuSatuStr, pola, lokal);
-        Date WaktuDua = SisaJam.konversiStringkeDate(waktuDuaStr, pola, lokal);
+            String judulKegiatan = "", tanggalInput = "", due = "", jenisKegiatan = "", prioritasKegiatan = "", sisaWaktu = "", progress = "", people = "";
+            String data = bufferedInput.readLine();
+            while (data != null) {
+                if (data.contains(user)) {
+                    StringTokenizer stringToken = new StringTokenizer(data, "_");
+                    judulKegiatan = stringToken.nextToken();
+                    tanggalInput = stringToken.nextToken();
+                    due = stringToken.nextToken();
+                    jenisKegiatan = stringToken.nextToken();
+                    prioritasKegiatan = stringToken.nextToken();
+                    sisaWaktu = stringToken.nextToken();
+                    long sisa = selisih(WaktuDua, waktuSatu);
+                    progress = stringToken.nextToken();
+                    people = stringToken.nextToken();
 
-        String judulKegiatan = "", tanggalInput = "", due = "", jenisKegiatan = "", prioritasKegiatan = "", sisaWaktu = "", progress = "", people = "";
-        String data = bufferedInput.readLine();
-        while (data != null) {
-            if (data.contains(user)) {
-                StringTokenizer stringToken = new StringTokenizer(data, "_");
-                judulKegiatan = stringToken.nextToken();
-                tanggalInput = stringToken.nextToken();
-                due = stringToken.nextToken();
-                jenisKegiatan = stringToken.nextToken();
-                prioritasKegiatan = stringToken.nextToken();
-                sisaWaktu = stringToken.nextToken();
-                long sisa = selisih(WaktuDua, waktuSatu);
-                progress = stringToken.nextToken();
-                people = stringToken.nextToken();
-
-                arrData.add(data);
-                arrDue.add(sisa);
+                    arrData.add(data);
+                    arrDue.add(sisa);
+                }
+                data = bufferedInput.readLine();
             }
-            data = bufferedInput.readLine();
         }
 
         for (int i = 0; i < arrData.size(); i++) {
@@ -391,52 +397,59 @@ public class NewJFrame extends javax.swing.JFrame {
         FileReader sortedFileReader = new FileReader(sortedDB);
         BufferedReader sortedBufferedReader = new BufferedReader(sortedFileReader);
 
-        SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
+//        SimpleDateFormat date = new SimpleDateFormat("dd-MM-yyyy");
         Locale lokal = null;
-        String jam = Jam.getText();
+//        String jam = Jam.getText();
 
         ZoneId zone = ZoneId.systemDefault();
         LocalTime time = LocalTime.now(zone);
 
-        int tahun = cal.get(Calendar.YEAR);
-        int bulan = cal.get(Calendar.MONTH) + 1;
-        int tanggall = cal.get(Calendar.DAY_OF_MONTH);
+        int rows = Jadwal.getRowCount();
+        TableModel model1 = Jadwal.getModel();
 
-        String tahun1 = Integer.toString(tahun);
-        String bulan1 = Integer.toString(bulan);
-        String tanggal1 = Integer.toString(tanggall);
+        for (int i = 0; i < rows; i++) {
+            String tanggalInputt = model1.getValueAt(i, 1).toString();
+            String dueKegiatan = model1.getValueAt(i, 2).toString();
 
-        String tanggal2 = String.valueOf(date.format(Due.getDate()));
+//        int tahun = cal.get(Calendar.YEAR);
+//        int bulan = cal.get(Calendar.MONTH) + 1;
+//        int tanggal = cal.get(Calendar.DAY_OF_MONTH);
+//
+//        String tahun1 = Integer.toString(tahun);
+//        String bulan1 = Integer.toString(bulan);
+//        String tanggal1 = Integer.toString(tanggal);
+//
+//        String tanggal2 = String.valueOf(date.format(Due.getDate()));
+            String pola = "dd-MM-yyyy HH:mm:ss";
+            String waktuSatuStr = (dueKegiatan + " " + "00:00:00");
+            String waktuDuaStr = (tanggalInputt + " " + time);
 
-        String pola = "dd-MM-yyyy HH:mm:ss";
-        String waktuSatuStr = (tanggal2 + " " + jam + ":00");
-        String waktuDuaStr = (tanggal1 + "-" + bulan1 + "-" + tahun1 + " " + time);
+            Date waktuSatu = SisaJam.konversiStringkeDate(waktuSatuStr, pola, lokal);
+            Date WaktuDua = SisaJam.konversiStringkeDate(waktuDuaStr, pola, lokal);
 
-        Date waktuSatu = SisaJam.konversiStringkeDate(waktuSatuStr, pola, lokal);
-        Date WaktuDua = SisaJam.konversiStringkeDate(waktuDuaStr, pola, lokal);
+            String sortedJudulKegiatan = "", sortedTanggalInput = "", sortedDue = "", SortedJenisKegiatan = "", sortedPrioritasKegiatan = "", sortedSisaWaktu = "", sortedProgress = "", sortedPeople = "";
+            String sortedData = sortedBufferedReader.readLine();
+            while (sortedData != null) {
+                if (sortedData.contains(user)) {
+                    StringTokenizer stringToken = new StringTokenizer(sortedData, "_");
+                    sortedJudulKegiatan = stringToken.nextToken();
+                    sortedTanggalInput = stringToken.nextToken();
+                    sortedDue = stringToken.nextToken();
+                    SortedJenisKegiatan = stringToken.nextToken();
+                    sortedPrioritasKegiatan = stringToken.nextToken();
+                    sortedSisaWaktu = stringToken.nextToken();
+                    long sisa = selisih(WaktuDua, waktuSatu);
+                    sortedProgress = stringToken.nextToken();
+                    sortedPeople = stringToken.nextToken();
 
-        String sortedJudulKegiatan = "", sortedTanggalInput = "", sortedDue = "", SortedJenisKegiatan = "", sortedPrioritasKegiatan = "", sortedSisaWaktu = "", sortedProgress = "", sortedPeople = "";
-        String sortedData = sortedBufferedReader.readLine();
-        while (sortedData != null) {
-            if (sortedData.contains(user)) {
-                StringTokenizer stringToken = new StringTokenizer(sortedData, "_");
-                sortedJudulKegiatan = stringToken.nextToken();
-                sortedTanggalInput = stringToken.nextToken();
-                sortedDue = stringToken.nextToken();
-                SortedJenisKegiatan = stringToken.nextToken();
-                sortedPrioritasKegiatan = stringToken.nextToken();
-                sortedSisaWaktu = stringToken.nextToken();
-                long sisa = selisih(WaktuDua, waktuSatu);
-                sortedProgress = stringToken.nextToken();
-                sortedPeople = stringToken.nextToken();
+                    String sortedArrData[] = {sortedJudulKegiatan, sortedTanggalInput, sortedDue, SortedJenisKegiatan, sortedPrioritasKegiatan, sortedSisaWaktu, sortedProgress, sortedPeople};
+                    DefaultTableModel model = (DefaultTableModel) Jadwal.getModel();
 
-                String sortedArrData[] = {sortedJudulKegiatan, sortedTanggalInput, sortedDue, SortedJenisKegiatan, sortedPrioritasKegiatan, sortedSisaWaktu, sortedProgress, sortedPeople};
-                DefaultTableModel model = (DefaultTableModel) Jadwal.getModel();
-
-                model.addRow(sortedArrData);
-                setVisible(true);
+                    model.addRow(sortedArrData);
+                    setVisible(true);
+                }
+                sortedData = sortedBufferedReader.readLine();
             }
-            sortedData = sortedBufferedReader.readLine();
         }
         sortedFileReader.close();
         sortedBufferedReader.close();
@@ -551,7 +564,7 @@ public class NewJFrame extends javax.swing.JFrame {
         sortedBufferedReader.close();
         System.gc();
     }
-    
+
     public int nomorDataYangDikirim() {
 
         DefaultTableModel model = (DefaultTableModel) Jadwal.getModel();
@@ -574,6 +587,7 @@ public class NewJFrame extends javax.swing.JFrame {
     public static Date konversiStringkeDate(String tanggalDanWaktuStr, String pola, Locale lokal) {
         Date tanggalDate = null;
         SimpleDateFormat formatter;
+
         if (lokal == null) {
             formatter = new SimpleDateFormat(pola);
         } else {
@@ -834,13 +848,14 @@ public class NewJFrame extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addGap(28, 28, 28)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel7)
-                    .addComponent(userX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(Urutkan)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(Kembali, javax.swing.GroupLayout.PREFERRED_SIZE, 29, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(UrutkanSisaWaktu)
-                    .addComponent(Reload))
+                    .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
+                        .addComponent(jLabel7)
+                        .addComponent(userX, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addComponent(Urutkan)
+                        .addComponent(UrutkanSisaWaktu)
+                        .addComponent(Reload)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.UNRELATED)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jScrollPane3, javax.swing.GroupLayout.Alignment.TRAILING)
@@ -1150,7 +1165,7 @@ public class NewJFrame extends javax.swing.JFrame {
         Date WaktuDua = SisaJam.konversiStringkeDate(waktuDuaStr, pola, lokal);
 
         String hasilSelisih = SisaJam.selisihDateTime(waktuSatu, WaktuDua);
-        
+
         sisawaktu = hasilSelisih;
 
         String data[] = {namaKegiatan, tanggalInput, dueKegiatan, jenisKegiatan, prioritas, sisawaktu, progres, tambahOrang};
